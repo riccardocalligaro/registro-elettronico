@@ -1,0 +1,190 @@
+ body {
+   background-color: red;
+ }
+
+ .icon-align {
+       vertical-align: text-bottom;
+  }
+
+ #logout_icon {
+   align-items:flex-end;
+   margin-right: 20px
+ }
+
+.sidebar.component {
+  height: 100%;
+  width: 66px;
+  background-color: #2b2b2b;
+  text-align: center;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+#bottomIconaSidebar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin-bottom: 20px;
+}
+
+
+
+.upperbar.title {
+padding-left: 66px;
+font-size: 28px;
+margin-left: 20px;
+color: #ffffff;
+font-weight: 200;
+}
+
+.upperbar.component {
+
+  width: 100%;
+  height: 66px;
+  background-color: #d50000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.main.content {
+  position: absolute;
+  margin-top: 66px;
+  margin-left: 66px;
+}
+
+.content.box {
+  width: 450px;
+  margin: 47px;
+  padding: 20px;
+  text-align: justify;
+  z-index: 1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  float: left;
+}
+
+.grafico {
+  width: 700px;
+  margin: 47px;
+  padding: 20px;
+  text-align: justify;
+  z-index: 1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  float: left;
+
+}
+
+.content.title {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.lezione.titolo{
+  font-size: 24px;
+  font-weight: 300;
+
+}
+.lezione.description{
+  font-weight: 300;
+}
+
+
+.box-title {
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+.evento {
+  width:100%;
+  vertical-align:top;
+  margin-bottom: 20px;
+}
+
+.evento-giorno {
+  display:inline-block;
+  vertical-align:middle;
+  text-align: center;
+  height: 48px;
+  width: 19%;
+  vertical-align: middle;
+  line-height: 46px;
+  font-size: 26px;
+}
+
+
+
+.evento-description {
+  display:inline-block;
+  width:80%;
+  vertical-align:middle;
+}
+
+
+.voto {
+  width:100%;
+  vertical-align:top;
+  margin-bottom: 20px;
+}
+
+.voto-valutazione {
+  display:inline-block;
+  vertical-align:middle;
+  text-align: center;
+  height: 63px;
+  width: 63px;
+  vertical-align: middle;
+  line-height: 46px;
+  font-size: 26px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.positivo {
+  background-color: #4caf50;
+}
+
+.negativo {
+  background-color: #d50000;
+}
+
+.quasi-positivo {
+  background-color: #ffc400;
+}
+
+.blu {
+  background-color: #0080B8;
+}
+
+.voto-valutazione h1 {
+  color: #ffffff;
+  margin-top: 16px;
+  font-size: 26px;
+}
+
+
+.voto-info {
+  display:inline-block;
+  width:80%;
+  vertical-align:middle;
+}
+
+.voto-title {
+  font-size: 23px;
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+body {
+      display: none
+    }
+}
