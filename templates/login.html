@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <!--===============================================================================================-->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/utility.css') }}">
+        <!--===============================================================================================-->
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/loading-bar.css') }}">
+        <!--===============================================================================================-->
+        <!--==============================        SCRIPTS           =======================================-->
+        <!--===============================================================================================-->
+        <script src="{{url_for('static', filename='js/main.js')}}"></script>
+        <script src="{{url_for('static', filename='js/graphs.js')}}"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+        <script src="{{url_for('static', filename='js/moment.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/Chart.min.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/loading-bar.js')}}"></script>
+        <script src="{{url_for('static', filename='vendor/modernizr.js')}}"></script>
+
+
+      <!--===================================   FONTS      ==============================================-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+      <!--===============================================================================================-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+      <!--===============================================================================================-->
+      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
+      <!--===============================================================================================-->
+      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
+      <!--===============================================================================================-->
+      <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+      <!--===============================================================================================-->
+
+    <title>Login | Registro elettronico</title>
+  </head>
+  <body>
+
+    <div id="preloader" style="display: none;"></div>
+
+
+    <div class="limiter">
+  		<div class="container-login100">
+  			<div class="wrap-login100">
+  				<form class="login100-form validate-form" method="post">
+  					<span class="login100-form-title p-b-36">
+  						Benvenuto
+  					</span>
+
+
+  					<div class="wrap-input100 validate-input" data-validate = "Usa il codice claseviva o email">
+  						<input class="input100 has-val" type="text" name="username">
+  						<span class="focus-input100" data-placeholder="Username"></span>
+  					</div>
+
+  					<div class="wrap-input100 validate-input" data-validate="Inserisci la password">
+  						<span class="btn-show-pass">
+  							<i class="zmdi zmdi-eye"></i>
+  						</span>
+  						<input class="input100 has-val" type="password" name="password">
+  						<span class="focus-input100" data-placeholder="Password"></span>
+  					</div>
+
+  					<div class="container-login100-form-btn">
+  						<div class="wrap-login100-form-btn">
+  							<div class="login100-form-bgbtn"></div>
+  							<button class="login100-form-btn" type="submit" name="log_in" id="submit_button">
+  								Log in
+  							</button>
+
+
+
+  						</div>
+  					</div>
+
+  					<div class="text-center p-t-35">
+  						<span class="txt1">
+  							Usa le credenziali Classeviva -
+  						</span>
+
+              <a class="txt2" href="#">
+                Aiuto
+              </a>
+
+              {% if error %}
+              <p class="login_error">{{ error }}
+              {%else%}
+              <script type="text/javascript">
+              $(document).ready(function(){
+              $('#submit_button').click( function() { $('#preloader').show(); } );
+              });
+              </script>
+              {% endif %}
+
+  					</div>
+  				</form>
+  			</div>
+  		</div>
+  	</div>
+
+
+  </body>
+</html>

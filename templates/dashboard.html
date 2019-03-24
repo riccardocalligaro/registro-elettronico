@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <!--===============================================================================================-->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/utility.css') }}">
+    <!--===============================================================================================-->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/loading-bar.css') }}">
+    <!--===============================================================================================-->
+    <!--==============================        SCRIPTS           =======================================-->
+    <!--===============================================================================================-->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/graphs.js')}}"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+    <script src="{{url_for('static', filename='js/moment.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/Chart.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/loading-bar.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/modernizr.js')}}"></script>
+
+
+  <!--===================================   FONTS      ==============================================-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+  <!--===============================================================================================-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+  <!--===============================================================================================-->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
+  <!--===============================================================================================-->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
+  <!--===============================================================================================-->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+  <!--===============================================================================================-->
+
+
+
+    <title>Dashboard</title>
+  </head>
+
+
+
+  <body>
+    <div id='loading'><div id='progress-bar'></div><div id='loader'>Loading...</div></div>
+
+    <div class="se-pre-con"></div>
+    <div class="upperbar component">
+    <span class="upperbar title"> Registro elettronico</span>
+  <a href="{{log_out}}"> <i id="logout_icon" class="material-icons md-light">exit_to_app</i></a>
+
+    </div>
+
+
+    <div class="ss">
+      <div class="sidebar component">
+        <i class="material-icons md-46 md-light" id="button_school_sidebar">school</i>
+        <i class="material-icons md-46 md-light" id="button_profile_sidebar">account_circle</i>
+      </div>
+
+      <div class="sidebar-box box-info" style="display:none;">
+        <p>Versione: 🖋️ Beta</p>
+        <p>Info Telegram: @R1CCARD0</p>
+        <p>Info E-mail: riccardocalligaro@gmail.com</p>
+      </div>
+
+      <div class="sidebar-box box-profilo" style="display:none;">
+        <div class="profilo-titolo">
+  <h1 class="titolo">📇 Le tue info</h1>
+        </div>
+
+        <div class="profilo-info">
+          <div class="profilo-tipo">Tipo:
+            {% if cards[0]['usrType'] == 'S' %}
+            <div class="tipo-user studente">Studente</div>
+            {% else %}
+            <div class="tipo-user insegnante">Insegnante</div>
+            {% endif %}
+          </div><br>
+          <div class="profilo-nome dati-profilo">Nome: <p>{{cards[0]['firstName']|lower|capitalize}}</p></div><br>
+          <div class="profilo-cognome dati-profilo">Cognome: <p>{{cards[0]['lastName']|lower|capitalize}}</p></div><br>
+          <div class="profilo-scuola dati-profilo">Scuola: <p>{{cards[0]['schDedication']}} - {{cards[0]['schCity']}}</p></div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $( ".sidebar-box.box-profilo" ).hide();
+    $( ".sidebar-box.box-info" ).hide();
+
+    $('#button_school_sidebar').hover( function() { $('.sidebar-box.box-info').toggle(); } );
+
+    $('#button_profile_sidebar').hover( function() { $('.sidebar-box.box-profilo').toggle(); } );
+    });
+    </script>
+
+
+
+    <div class="main content">
+
+
+
+      <div class="content box lezioni">
+
+        <h1 class="content title">🏫 Lezioni di oggi</h1>
+
+        {% for lesson in lessons['lessons'] %}
+        {% if lesson['subjectDesc'] != 'SOSTEGNO'%}
+        <div class="lezione">
+          <div class="lezione upper">
+
+
+            <span class="lezione titolo">📚 {{ lesson['subjectDesc'].lower().capitalize()}}</span>
+          </div>
+
+          <span class="lezione description">{{ lesson['lessonArg'].capitalize()}}</span>
+        </div>
+          {% endif %}
+        {% endfor %}
+
+      </div>
+
+      <!--===============================================================================================-->
+
+
+
+    <div class="content box eventi">
+      <h1 class="agenda-title">📅 Prossimi eventi</h1>
+
+      {% for i in range(0,5)%}
+      <div class="evento">
+      <div class="evento-giorno">{{ parse_event_date(events['agenda'][i]['evtDatetimeBegin']) }}</div>
+        <div class="evento-description">{{events['agenda'][i]['notes']}}</div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <!--===============================================================================================-->
+
+    <div class="content box voti">
+    <h1 class="box-title">🖊️ Ultimi voti</h1>
+    {% for grade in grades%}
+    <div class="voto">
+      {% if grade[1] == 'blue' %}
+      <div class="voto-valutazione blu"><h1>{{grade[6]}}</h1></div>
+
+      {% elif grade[1] == 'red' %}
+        {% if grade[4] >= 5.50 %}
+        <div class="voto-valutazione quasi-positivo"><h1>{{grade[6]}}</h1></div>
+        {% else %}
+        <div class="voto-valutazione negativo"><h1>{{grade[6]}}</h1></div>
+        {% endif %}
+      {% else %}
+
+      <div class="voto-valutazione positivo"><h1>{{grade[6]}}</h1></div>
+      {% endif %}
+
+      <div class="voto-info">
+        <div class="voto-title">{{grade[19].lower().capitalize()}}</div>
+        <div class="voto-description">{{grade[11]}}</div>
+      </div>
+    </div>
+{% endfor %}
+
+
+
+      </div>
+
+      <div class="content box grafico">
+        <h1 class="box-title">📈 Info</h1>
+        <canvas id="grafico-voti"></canvas>
+        <canvas id="grafico-media"></canvas>
+        <br>
+        <div class="box-medie">
+        {% for media_periodo in media_periodi %}
+        <div class="circle">
+
+                  <div id="circle{{loop.index}}">
+                    <strong></strong>
+                    <span class="">{{loop.index}} periodo</span>
+
+                  </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+  <script>
+  $(document).ready(function ($) {
+  {% for media_periodo in media_periodi %}
+    $('#circle{{loop.index}}').circleProgress({
+      value: {{ media_periodo/10 }},
+      size: 100,
+      fill: {
+        {% if media_periodo >=6 %}
+        gradient: ["#2e7d32", "#43a047", "#66bb6a"]
+        {% else  %}
+        {%if media_periodo >= 5.50 %}
+        gradient: ["#fbc02d", "#ffeb3b", "#ffee58"]
+        {% else %}
+        gradient: ["#d50000", "#f44336", "#ff7961"]
+        {%endif%}
+        {% endif %}
+      },
+      startAngle: -Math.PI / 2
+    }).on('circle-animation-progress', function(event, progress, stepValue) {
+    $(this).find('strong').text({{media_periodo}}.toFixed(2));
+  });
+
+    {% endfor %}
+
+
+  });
+
+  // grafici medie, voti
+  </script>
+
+
+        <script>
+    var timeFormat = 'YYYY/MM/DD';
+
+    var voticonfig = {
+        type:    'line',
+        data:    {
+            datasets: [
+                {
+                    label: "Voti",
+                    data: [{{gradesData|safe}}],
+                    fill: false,
+                    backgroundColor:'#d50000',
+                    borderColor: '#ef5350'
+                }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            responsive: true,
+            title:      {
+                display: true,
+                text:    "I tuoi voti"
+            },
+            scales:     {
+                xAxes: [{
+                    type:       "time",
+                    time:       {
+                        format: timeFormat,
+                        tooltipFormat: 'll',
+                        unit: 'month'
+                    },
+                    scaleLabel: {
+                        display:     false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display:     false
+                    }
+                }]
+            }
+        }
+    };
+
+    var mediaconfig = {
+        type:    'line',
+        data:    {
+            datasets: [
+                {
+                    label: "Voti",
+                    data: [{{graph_media|safe}}],
+                    fill: false,
+                    backgroundColor:'#2196f3',
+                    borderColor: '#90caf9'
+                }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            responsive: true,
+            title:      {
+                display: true,
+                text:    "La tua media"
+            },
+            scales:     {
+                xAxes: [{
+                    type:       "time",
+                    time:       {
+                        format: timeFormat,
+                        tooltipFormat: 'll',
+                        unit: 'month'
+                    },
+                    scaleLabel: {
+                        display:     false
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display:     false
+
+                    }
+                }]
+            }
+        }
+    };
+
+    var barChartData = {
+      labels: ['Settembre', 'Ottobre', 'Novembre', 'Dicembre', 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno'],
+      datasets: [{
+      label: 'Assenze',
+      backgroundColor: '#d50000',
+      data:
+        {{absences_data[0]|safe}}
+
+    }, {
+      label: 'Uscite',
+      backgroundColor: '#ffc400',
+      data:
+        {{absences_data[1]|safe}}
+
+    }, {
+      label: 'Ritardi',
+      backgroundColor: '#4caf50',
+      data:
+        {{absences_data[2]|safe}}
+
+    }]
+
+  };
+
+        window.onload = function () {
+        var ctx       = document.getElementById("grafico-voti").getContext("2d");
+        window.myLine = new Chart(ctx, voticonfig);
+        var cty       = document.getElementById("grafico-media").getContext("2d");
+        window.myLine = new Chart(cty, mediaconfig);
+        window.myBar = new Chart(graficoassenze, {
+          legend: { display: false },
+          type: 'bar',
+          data: barChartData,
+          options: {
+            title: {
+              display: false
+            },
+            responsive: true,
+            scales: {
+              xAxes: [{
+                stacked: true,
+              }],
+              yAxes: [{
+                stacked: true,
+                barPercentage: 0.5,
+                barThickness: 6
+              }]
+            }
+          }
+        });
+
+    };
+</script>
+
+      </div>
+
+      <div class="content box assenze">
+        <h1 class="box-title">📊 Assenze</h1>
+        <!-- assenze, uscite, ritardi, ritardi brevi, non giustificate -->
+
+        <div class="box-assenza">
+        <div  style="width: 50%;margin-left: 25%;" data-value="{{absences_review[0]}}" data-preset="fan" class="ldBar label-center" data-stroke-width="10" data-max="50",
+        {% if absences_review[0] <= 30 %}
+        data-stroke="#2e7d32">
+        {% else %}
+        {% if absences_review[0] >= 40 %}
+        data-stroke="#d50000">
+        {% else %}
+        data-stroke="#ffeb3b">
+        {%endif%}
+        {%endif%}
+        </div>
+        </div>
+
+        <div class="box-assenza-info">
+
+        <canvas id="graficoassenze" height="230px"></canvas>
+        {% if absences_review[4] > 0 %}
+        <p>Non giustificate: {{absences_review[4]}}</p>
+        {% endif %}
+        </div>
+
+
+
+      </div>
+
+
+      <div class="content box comunicazioni">
+        <h1 class="content titolo">📰 Ultime comunicazioni</h1>
+
+        {% for notice in noticeboard_titles %}
+        <div class="comunicazione">
+          <div class="comunicazione titolo">
+            <div class="comunicazione titolo2">📎 {{notice[0]}}</div>
+            {%if notice[2] != ''%}
+            <a href="{{notice[2]}}" ><i class="material-icons comunicazione-icona">save_alt</i></a>
+            {% endif %}
+          </div>
+
+          <div class="comunicazione data ">Data di pubblicazione: {{notice[1]}}</div>
+        </div>
+
+        {%endfor %}
+
+      </div>
+
+      <div class="content box materiali">
+        <h1 class="titolo materiale-titolo">📚 Materiale</h1>
+        {%for teacher in didactics['didacticts'] %}
+          <div class="box professore">
+            <div class="professore titolo">
+          <i class="material-icons" id="show_btn{{loop.index}}">play_arrow</i>
+          <h2>📁 {{ teacher['teacherName']}}</h2>
+          </div>
+
+          <script type="text/javascript">
+          $(document).ready(function(){
+          $("#materiale-all{{loop.index}}").hide();
+
+          $("#show_btn{{loop.index}}").click(function(){
+            $("#materiale-all{{loop.index}}").toggle("medium");
+          });
+
+          });
+          </script>
+
+
+
+          <div id="materiale-all{{loop.index}}" >
+          {% for folder in teacher['folders'] %}
+          <div class="materiale cartella">
+          <h1 class="cartella-titolo">{{ folder['folderName']}}</h1>
+
+          <div id="mat1" class="materiale-contenuto">
+            {% for content in folder['contents'] %}
+            <div class="materiale-file">
+              <a href="#"><i id="show_btn "class="material-icons">cloud_download</i></a>
+              {% if content['contentName'] == '' %}
+              <h2 class="materiale nome">Senza titolo</h2>
+              {% else %}
+              <h2 class="materiale nome">{{ content['contentName'] }}</h2>
+              {% endif %}
+
+            </div>
+            {% endfor %}
+          </div>
+
+
+          </div>
+          {% endfor %}
+
+        </div>
+        </div>
+
+
+        {%endfor%}
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+
+      <!--===============================================================================================-->
+          <script src="{{url_for('static', filename='vendor/circle-progress.min.js')}}"></script>
+      <!--===============================================================================================-->
+          <script src="{{url_for('static', filename='js/main.js')}}"></script>
+  </body>
+</html>
