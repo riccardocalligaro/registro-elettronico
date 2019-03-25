@@ -110,16 +110,15 @@
       <div class="content box lezioni">
 
         <h1 class="content title">🏫 Lezioni di oggi</h1>
-
+        {% if not lessons['lessons'] %}
+        <h2>Oggi non ci sono state lezioni. 🙂</h2>
+        {%endif%}
         {% for lesson in lessons['lessons'] %}
         {% if lesson['subjectDesc'] != 'SOSTEGNO'%}
         <div class="lezione">
           <div class="lezione upper">
-
-
             <span class="lezione titolo">📚 {{ lesson['subjectDesc'].lower().capitalize()}}</span>
           </div>
-
           <span class="lezione description">{{ lesson['lessonArg'].capitalize()}}</span>
         </div>
           {% endif %}

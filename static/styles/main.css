@@ -349,7 +349,7 @@ and (min-device-width : 0px)
 and (max-device-width : 394px) {
   .upperbar.title {
     font-size: 23px;
-    padding-left: 8%;
+    padding-left: 0;
   }
 
   .voto {
@@ -360,7 +360,9 @@ and (max-device-width : 394px) {
 @media screen
 and (min-device-width : 0px)
 and (max-device-width : 700px) {
-
+  #logout_icon {
+    display: none;
+  }
   .main.content {
     margin-left: 0;
   }
@@ -376,6 +378,7 @@ and (max-device-width : 700px) {
   .voto-valutazione {
     height: 53px;
     width: 53px;
+    line-height: normal;
   }
 
   .voto-valutazione h1 {
@@ -386,6 +389,13 @@ and (max-device-width : 700px) {
   }
   .voto {
     text-align: center;
+  }
+  .voto-title {
+    margin-top: 15px;
+    font-size: 17px;
+  }
+  .voto-description {
+    display: none;
   }
 }
 
