@@ -34,6 +34,8 @@ class NotLoggedInError(Exception):
     def __init__(self):
         self.message = "You must logged in to use this method."
 
+#      sql = "INSERT INTO teams (left_team, left_team_image_url, right_team, right_team_image_url, tournament, time_match) VALUES (%s, %s, %s, %s, %s, %s)"
+
 class Utils:
     def __init__(self):
         return
@@ -328,3 +330,7 @@ class Session:
 
     def didactics_download(self, content_id):
         return self.download_file_request('didactics', 'item', content_id)
+
+s1 =  Session()
+s1.login("riccardocalligaro@gmail.com", "1pAsd!ansquE")
+print(s1.id)
